@@ -3,6 +3,7 @@ package com.employee.management.serviceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.employee.management.config.SecurityConfig;
 import com.employee.management.entity.Employee;
 import com.employee.management.entity.Role;
 import com.employee.management.entity.User;
@@ -27,10 +28,13 @@ public class UpdateServiceImpl implements UpdateService{
 	@Autowired 
 	CreateService createService;
 	
+	@Autowired
+	SecurityConfig securityConfig;
+	
 	@Override
 	public String updateRecordbyId(Employee newEmployee, User newUser, int id) {
 	Employee oldEmployee = employeeRepository.findById(id).orElseThrow();
-	User oldUser = oldEmployee.getUser();
+	User oldUser = userRepository.findById(id).orElseThrow();
 	Role oldRole = oldUser.getRoles();
 	if(newUser.getUserName()==null) {
 		oldUser.setUserName(oldUser.getUserName());
@@ -39,10 +43,10 @@ public class UpdateServiceImpl implements UpdateService{
 		oldUser.setUserName(newUser.getUserName());
 	}
 	if(newUser.getPassword()==null) {
-		oldUser.setPassword(oldUser.getPassword());
+		oldUser.setPassword(securityConfig.passwordEncoder().encode(oldUser.getPassword()));
 	}
 	else {
-		oldUser.setPassword(newUser.getPassword());
+		oldUser.setPassword(securityConfig.passwordEncoder().encode(newUser.getPassword()));
 	}
 	if(newEmployee.getFirstName()==null) {
 		oldEmployee.setFirstName(oldEmployee.getFirstName());
@@ -72,6 +76,7 @@ public class UpdateServiceImpl implements UpdateService{
 		Role newRole = roleRepository.findById(hierarchy).get();
 		oldUser.setRoles(newRole);
 	}
+	    userRepository.saveAndFlush(oldUser);
 		employeeRepository.saveAndFlush(oldEmployee);
 	   	return "The Record with ID "+id+" Updated and Saved";
 	}

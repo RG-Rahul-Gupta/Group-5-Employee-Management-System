@@ -41,7 +41,8 @@ public class CreateServiceImpl implements CreateService{
 		Role role = roleRepository.findById(hierarchy).get();
 		user.setPassword(securityConfig.passwordEncoder().encode(user.getPassword()));
 		user.setRoles(role);
-		employee.setUser(user);
+		//employee.setUser(user);
+		userRepository.saveAndFlush(user);
 		employeeRepository.saveAndFlush(employee);
 		return "Record Inserted to Employee Table"+hierarchy;
 	
@@ -69,17 +70,16 @@ public class CreateServiceImpl implements CreateService{
 		Employee employee = new Employee();
 		User user = new User();
 	    Role role = roleRepository.findById(1).get();
-	    System.out.println(role);
 		user.setUserName("Owner");
 		user.setPassword(securityConfig.passwordEncoder().encode("qwerty"));
 		user.setRoles(role);
-		System.out.println(user);
-		employee.setUser(user);
 		employee.setFirstName("Gill");
 		employee.setLastName("Shawn");
 		employee.setEmailId("GillShawntheOwner@gmail.com");
 		employee.setHierarchy(1);
+		System.out.println(user);
 		System.out.println(employee);
+		userRepository.saveAndFlush(user);
 		employeeRepository.saveAndFlush(employee);
 		}
 	}

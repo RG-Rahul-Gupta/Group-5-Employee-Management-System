@@ -18,6 +18,7 @@ public class DeleteServiceImpl implements DeleteService{
 	
 	@Override
 	public String deleteSingleRecordById(int id) {
+		userRepository.deleteById(id);
 		employeeRepository.deleteById(id);
 		return "The record with ID "+id+" deleted form Database with its associated properties";
 			

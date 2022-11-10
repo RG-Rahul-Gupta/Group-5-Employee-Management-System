@@ -39,9 +39,9 @@ public class User  {
 	private String userName;
 	private String password;
 	
-	@JsonBackReference
-	@OneToOne(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-	private Employee employee;
+//	@JsonBackReference
+//	@OneToOne(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+//	private Employee employee;
 	
 	@ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH,CascadeType.DETACH},fetch = FetchType.EAGER)
     @JoinColumn( name = "role_id", nullable=false, referencedColumnName = "role_id")

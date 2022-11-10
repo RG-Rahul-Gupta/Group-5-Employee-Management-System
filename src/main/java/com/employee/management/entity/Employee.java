@@ -39,9 +39,9 @@ public class Employee  {
 	private String emailId;
 	private int hierarchy;
 	
-	@JsonManagedReference
-	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-	@JoinColumn(name="user_id",nullable = false,referencedColumnName = "user_id" )
-	private User user;
+//	@JsonManagedReference
+//	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+//	@JoinColumn(name="user_id",nullable = false,referencedColumnName = "user_id" )
+//	private User user;
 	
 }
